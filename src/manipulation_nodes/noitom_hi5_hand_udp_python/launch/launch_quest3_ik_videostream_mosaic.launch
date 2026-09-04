@@ -1,0 +1,77 @@
+<launch>
+    <arg name="webrtc_wait_timeout" default="180"/>
+    <arg name="video_init_timeout"  default="10"/>
+    <arg name="send_srv" default="1"/>
+    <arg name="version" default="4"/>
+    <arg name="ctrl_arm_idx" default="2"/>
+    <arg name="ik_type_idx" default="0"/>
+    <arg name="ip_address" default=""/>
+    <arg name="control_torso" default="0"/>
+    <arg name="hand_reference_mode" default="thumb_index"/>
+
+    <arg name="head_topic" default="/camera/color/image_raw"/>
+    <arg name="left_topic" default="/left_wrist_camera/color/image_raw"/>
+    <arg name="right_topic" default="/right_wrist_camera/color/image_raw"/>
+    <arg name="output_width" default="1280"/>
+    <arg name="output_height" default="720"/>
+    <arg name="output_fps" default="20.0"/>
+    <!-- 카메라 드라이버가 별도 호스트(192.168.26.12)에 있으므로 raw 대신 compressed 로 받는다 -->
+    <arg name="use_compressed" default="true"/>
+    <arg name="stale_timeout" default="1.0"/>
+    <!-- Panel centers scale with the output resolution.
+         Absolute pixels break the layout when output_width/height change:
+         y=600 falls outside a 540-tall canvas, so the wrist panels get clipped away.
+         At 1280x720 these evaluate to the original 640/240, 320/600, 960/600. -->
+    <arg name="head_x" default="$(eval int(arg('output_width') * 1 / 2))"/>
+    <arg name="head_y" default="$(eval int(arg('output_height') * 1 / 3))"/>
+    <arg name="head_scale" default="1.0"/>
+    <arg name="left_x" default="$(eval int(arg('output_width') * 1 / 4))"/>
+    <arg name="left_y" default="$(eval int(arg('output_height') * 5 / 6))"/>
+    <arg name="left_scale" default="1.0"/>
+    <arg name="right_x" default="$(eval int(arg('output_width') * 3 / 4))"/>
+    <arg name="right_y" default="$(eval int(arg('output_height') * 5 / 6))"/>
+    <arg name="right_scale" default="1.0"/>
+    <arg name="debug_mode" default="false"/>
+    <arg name="debug_grid_step" default="100"/>
+    <arg name="show_labels" default="false"/>
+
+    <node pkg="noitom_hi5_hand_udp_python"
+          type="quest_camera_mosaic.py"
+          name="quest_camera_mosaic"
+          output="screen">
+        <param name="head_topic" value="$(arg head_topic)"/>
+        <param name="left_topic" value="$(arg left_topic)"/>
+        <param name="right_topic" value="$(arg right_topic)"/>
+        <param name="output_prefix" value="/quest/mosaic"/>
+        <param name="output_width" value="$(arg output_width)"/>
+        <param name="output_height" value="$(arg output_height)"/>
+        <param name="output_fps" value="$(arg output_fps)"/>
+        <param name="use_compressed" value="$(arg use_compressed)"/>
+        <param name="stale_timeout" value="$(arg stale_timeout)"/>
+        <param name="head_x" value="$(arg head_x)"/>
+        <param name="head_y" value="$(arg head_y)"/>
+        <param name="head_scale" value="$(arg head_scale)"/>
+        <param name="left_x" value="$(arg left_x)"/>
+        <param name="left_y" value="$(arg left_y)"/>
+        <param name="left_scale" value="$(arg left_scale)"/>
+        <param name="right_x" value="$(arg right_x)"/>
+        <param name="right_y" value="$(arg right_y)"/>
+        <param name="right_scale" value="$(arg right_scale)"/>
+        <param name="debug_mode" value="$(arg debug_mode)"/>
+        <param name="debug_grid_step" value="$(arg debug_grid_step)"/>
+        <param name="show_labels" value="$(arg show_labels)"/>
+    </node>
+
+    <include file="$(find noitom_hi5_hand_udp_python)/launch/launch_quest3_ik_videostream_orbbec.launch">
+        <arg name="send_srv" value="$(arg send_srv)"/>
+        <arg name="version" value="$(arg version)"/>
+        <arg name="ctrl_arm_idx" value="$(arg ctrl_arm_idx)"/>
+        <arg name="ik_type_idx" value="$(arg ik_type_idx)"/>
+        <arg name="ip_address" value="$(arg ip_address)"/>
+        <arg name="webrtc_wait_timeout" value="$(arg webrtc_wait_timeout)"/>
+        <arg name="video_init_timeout" value="$(arg video_init_timeout)"/>
+        <arg name="control_torso" value="$(arg control_torso)"/>
+        <arg name="camera_publisher_name" value="/quest/mosaic"/>
+        <arg name="hand_reference_mode" value="$(arg hand_reference_mode)"/>
+    </include>
+</launch>

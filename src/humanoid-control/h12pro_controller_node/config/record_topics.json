@@ -1,0 +1,16 @@
+{
+  "record_topics": [
+    "/sensors_data_raw",
+    "/kuavo_arm_traj",
+    "/control_robot_hand_position",
+    "/dexhand/state",
+    "/robot_head_motion_data",
+
+    "/camera/color/image_raw/compressed",
+    "/camera/color/camera_info",
+    "/left_wrist_camera/color/image_raw/compressed",
+    "/left_wrist_camera/color/camera_info",
+    "/right_wrist_camera/color/image_raw/compressed",
+    "/right_wrist_camera/color/camera_info"
+  ]
+}

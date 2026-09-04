@@ -1,0 +1,31 @@
+{
+    "record_topics": [
+        "/camera/color/image_raw/compressed",
+        "/camera/color/camera_info",
+        "/left_wrist_camera/color/image_raw/compressed",
+        "/left_wrist_camera/color/camera_info",
+        "/right_wrist_camera/color/image_raw/compressed",
+        "/right_wrist_camera/color/camera_info",
+        "/sensors_data_raw",
+        "/joint_cmd",
+        "/joint_states",
+        "/kuavo_arm_traj",
+        "/control_robot_hand_position",
+        "/dexhand/state",
+        "/leju_quest_bone_poses",
+        "/quest_joystick_data",
+        "/quest3/triger_arm_mode",
+        "/cmd_torso_pose_vr",
+        "/vr_whole_torso_ctrl",
+        "/robot_head_motion_data",
+        "/ik/two_arm_hand_pose_cmd",
+        "/ik/result",
+        "/ik/result_free",
+        "/drake_ik/real_arm_hand_pose",
+        "/drake_ik/eef_pose",
+        "/dexhand/command",
+        "/mobile_manipulator_eef_poses",
+        "/tf",
+        "/tf_static"
+    ]
+}
